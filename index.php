@@ -97,7 +97,7 @@ curl_close($ch);
     	<div class="row">
     	    <div class="col-sm-1"></div>
     	    <div class="col-sm-3">
-    	    	<div>Listado de Reservas</div>
+    	    	<div>LISTADOS DE RESERVA A FACTURAR</div>
     	    	<div>
 <?php
 	foreach ($reservas as $booking) {
@@ -106,8 +106,9 @@ curl_close($ch);
 		echo "<div><b>ID:</b> ".$booking->id."</div>";
 		echo "<div><b>Vuelo:</b> ".$booking->vueloId."</div>";
 		echo "<div><b>Cliente:</b> ".$booking->clienteId."</div>";
-		echo "<div><button>  </button></div>";
+		echo '<div><button onclick="myFunction('."'".$booking->id."','".$booking->vueloId."','".$booking->clienteId."'".')"> CREAR FACTURA </button></div>';
 		echo "</div>";
+		//
 	}
 ?>
     	    	</div>
@@ -227,6 +228,18 @@ $(document).ready(function(){
 
 
  });
+ function facturar(/*idReserva,idVuelo,idCliente*/){
+ 	 document.getElementById("demo").innerHTML = "Hello World";
+ 	//alert(idReserva+"_vuelo_"+idVuelo+"_cliente_"+idCliente);
+ }
 </script>
+<button onclick="myFunction()">Click me</button>
 
+<p id="demo"></p>
+
+<script>
+function myFunction(idReserva,idVuelo,idCliente) {
+  document.getElementById("demo").innerHTML = idReserva+" |||||||| "+idVuelo+" |||||||| "+idCliente;
+}
+</script>
 </html>
