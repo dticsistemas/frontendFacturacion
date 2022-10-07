@@ -74,21 +74,50 @@ $vuelos = json_decode($result);
 curl_close($ch);
 
 
+
+// init curl object        
+$ch = curl_init();
+// define options
+$optArray = array(
+    CURLOPT_URL => 'https://controldocumentofacturawebapi20221003232458.azurewebsites.net/api/Factura/reservas',
+    CURLOPT_RETURNTRANSFER => true
+);
+// apply those options
+curl_setopt_array($ch, $optArray);
+// execute request and get response
+$result = curl_exec($ch);
+$reservas = json_decode($result);
+curl_close($ch);
     	?>
+
+
+
     </div>
     <div class="content">
     	<div class="row">
     	    <div class="col-sm-1"></div>
     	    <div class="col-sm-3">
     	    	<div>Listado de Reservas</div>
-    	    	
+    	    	<div>
+<?php
+	foreach ($reservas as $booking) {
+	//var_dump($booking);
+		echo "<div class='row'>";
+		echo "<div><b>ID:</b> ".$booking->id."</div>";
+		echo "<div><b>Vuelo:</b> ".$booking->vueloId."</div>";
+		echo "<div><b>Cliente:</b> ".$booking->clienteId."</div>";
+		echo "<div><button>  </button></div>";
+		echo "</div>";
+	}
+?>
+    	    	</div>
     	    </div>
     	    <div class="col-sm-4">
-    	    	<div><b><h4>CONFIGURACION FACTURA</h4></b></div>
+    	    	<div><b><h4>CONFIGURACIÓN FACTURA</h4></b></div>
     	    	<div>
-    	    		<b>ID:</b><?=$configuracion->id?><br>
+    	    		<b>ID: </b><?=$configuracion->id?><br>
     	    		<b>NIT:</b><?=$configuracion->nitProveedor?><br>
-    	    		<b>RS:</b><?=$configuracion->razonSocialProveedor?><br>
+    	    		<b>RS: </b><?=$configuracion->razonSocialProveedor?><br>
     	    	</div>
     	    	<div>
     	    	<h4>FACTURACION</h4>
@@ -119,7 +148,9 @@ curl_close($ch);
     	    		<div>
     	    			<?php
     	    				foreach ($pasajeros as $passanger) {
-    	    					echo $passanger->nombreCompleto."<br>";
+    	    					echo "<div class='row'> ";
+    	    					echo "<div class='col-sm-6'>".$passanger->id."</div> <div class='col-sm-6'>".$passanger->nombreCompleto."</div>";
+    	    					echo "</div>";
     	    				}
     	    			?>
     	    		
@@ -129,12 +160,23 @@ curl_close($ch);
     	    			<?php
     	    				foreach ($vuelos as $flight) {
     	    					//var_dump($flight);
-    	    					echo $flight->source_airport_code.
-    	    					" - ".$flight->destiny_airport_code."<br>";
+    	    					echo "<div class='row'> ";
+    	    					echo "<div class='col-sm-6'>".$flight->id."</div> <div class='col-sm-6'> ".$flight->source_airport_code." - ".$flight->destiny_airport_code."</div>";
+    	    					echo "</div>";
     	    				}
     	    			?>
     	    		</div>
     	    		<li>Booking</li>
+    	    		<div>
+    	    			<?php
+    	    				foreach ($reservas as $booking) {
+    	    					//var_dump($booking);
+    	    					echo "<div class='row'>";
+    	    					echo "<div class='col-sm-6'>".$booking->id."</div> <div class='col-sm-6'>[".$booking->reservationNumber."] Monto: ".$booking->monto."</div>";
+    	    					echo "</div>";
+    	    				}
+    	    			?>
+    	    		</div>
     	    	</ul> 
     	    </div>
 
