@@ -8,7 +8,7 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-    <title>AEROLICA MICROSERVICIO CONTROL FACTURA</title>
+    <title>AEROLINEA MICROSERVICIO CONTROL FACTURA</title>
      <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
   </head>
   <body>
@@ -106,7 +106,7 @@ curl_close($ch);
 		echo "<div><b>ID:</b> ".$booking->id."</div>";
 		echo "<div><b>Vuelo:</b> ".$booking->vueloId."</div>";
 		echo "<div><b>Cliente:</b> ".$booking->clienteId."</div>";
-		echo '<div><button onclick="myFunction('."'".$booking->id."','".$booking->vueloId."','".$booking->clienteId."'".')"> CREAR FACTURA </button></div>';
+		echo '<div><button onclick="myFunction('."'".$booking->id."','".$booking->vueloId."','".$booking->clienteId."','".$booking->monto."'".')"> CREAR FACTURA </button></div>';
 		echo "</div>";
 		//
 	}
@@ -122,23 +122,35 @@ curl_close($ch);
     	    	</div>
     	    	<div>
     	    	<h4>FACTURACION</h4>
-    	    	<form class="form form-control" action="" method="post">
+    	    	<form class="form form-control"
+    	    	action="http://127.0.0.1/facturacion/resultado.php" method="post">
+    	    		<input type="hidden" id="monto" name="monto" value="0">
+    	    		<input type="hidden" name="importe" value="0">
+    	    		<input type="hidden" name="lugar" value="SCZ">
+
+<div class="mb-3">
+					  <label for="exampleFormControlInput1" class="form-label">Nit/Ci/Passport</label>
+					  <input type="text" name="nitBeneficiario" class="form-control" id="exampleFormControlInput1" placeholder="......">
+					</div>
     	    		<div class="mb-3">
 					  <label for="exampleFormControlInput1" class="form-label">Razon Social</label>
-					  <input type="email" class="form-control" id="exampleFormControlInput1" placeholder=".....">
+					  <input type="text" name="razonSocialBeneficiario" class="form-control" id="exampleFormControlInput1" placeholder=".....">
 					</div>
 					<div class="mb-3">
 					  <label for="exampleFormControlTextarea1" class="form-label">Example textarea</label>
-					  <select class="form-select" aria-label="Default select example">
-						  <option value="1">Passport</option>
-						  <option value="2">Nit</option>
-						  <option value="3">Ci</option>
+					  <select class="form-select" name="tipoNit" aria-label="Default select example">
+						  <option value="passport">Passport</option>
+						  <option value="nit">Nit</option>
+						  <option value="ci">Ci</option>
 						</select>
 					</div>
-					<div class="mb-3">
-					  <label for="exampleFormControlInput1" class="form-label">Nit/Ci/Passport</label>
-					  <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="......">
-					</div>
+					
+					<input type="hidden" id="reservaId" name="reservaId" value="string">
+					<input type="hidden" id="clienteId" name="clienteId" value="string">
+					<input type="hidden" id="vueloId" name="vueloId" value="string">
+					<input type="hidden" name="configuracionFacturaId" value="<?=$configuracion->id?>">
+					<p id="demo"></p>
+					<input type="submit" value=" CREAR FACTURA ">
     	    	</form>
     	    	</div>
     	    </div>
@@ -233,13 +245,19 @@ $(document).ready(function(){
  	//alert(idReserva+"_vuelo_"+idVuelo+"_cliente_"+idCliente);
  }
 </script>
-<button onclick="myFunction()">Click me</button>
 
-<p id="demo"></p>
+
 
 <script>
-function myFunction(idReserva,idVuelo,idCliente) {
-  document.getElementById("demo").innerHTML = idReserva+" |||||||| "+idVuelo+" |||||||| "+idCliente;
+
+function myFunction(idReserva,idVuelo,idCliente,monto) {
+  document.getElementById("demo").innerHTML = "MontoTotal:"+monto+
+  " <br> ReservaID:{"+idReserva+"}<br>"+
+  "VueloID:{"+idVuelo+"}<br>ClienteID:{"+idCliente+"}";
+  document.getElementById("monto").value=monto;
+  document.getElementById("reservaId").value=idReserva;
+  document.getElementById("clienteId").value=idCliente;
+  document.getElementById("vueloId").value=idVuelo;
 }
 </script>
 </html>
