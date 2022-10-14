@@ -28,7 +28,6 @@
     <div class="content">
     	
     	<?php 
-
 // init curl object        
 $ch = curl_init();
 // define options
@@ -44,18 +43,39 @@ $configuracion = json_decode($result);
 curl_close($ch);
 
 
+$id_reserva=$_GET['reserva'];
+//var_dump($id_reserva);
 // init curl object        
 $ch = curl_init();
 // define options
 $optArray = array(
-    CURLOPT_URL => 'https://controldocumentofacturawebapi20221003232458.azurewebsites.net/api/Factura/pasajeros',
+    CURLOPT_URL => 'https://controldocumentofacturawebapi20221003232458.azurewebsites.net/api/Factura/reserva/'.$id_reserva,
     CURLOPT_RETURNTRANSFER => true
 );
 // apply those options
 curl_setopt_array($ch, $optArray);
 // execute request and get response
 $result = curl_exec($ch);
-$pasajeros = json_decode($result);
+$reserva = json_decode($result);
+//var_dump($reserva);
+curl_close($ch);
+
+$id_cliente = $reserva->clienteId;
+$id_vuelo = $reserva->vueloId;
+// init curl object        
+$ch = curl_init();
+// define options
+$optArray = array(
+    CURLOPT_URL => 'https://controldocumentofacturawebapi20221003232458.azurewebsites.net/api/Factura/cliente/'.$id_cliente,
+    CURLOPT_RETURNTRANSFER => true
+);
+// apply those options
+curl_setopt_array($ch, $optArray);
+// execute request and get response
+$result = curl_exec($ch);
+$pasajero = json_decode($result);
+//var_dump($pasajero);
+
 curl_close($ch);
 
 
@@ -63,31 +83,21 @@ curl_close($ch);
 $ch = curl_init();
 // define options
 $optArray = array(
-    CURLOPT_URL => 'https://controldocumentofacturawebapi20221003232458.azurewebsites.net/api/Factura/vuelos',
+    CURLOPT_URL => 'https://controldocumentofacturawebapi20221003232458.azurewebsites.net/api/Factura/vuelo/'.$id_vuelo,
     CURLOPT_RETURNTRANSFER => true
 );
 // apply those options
 curl_setopt_array($ch, $optArray);
 // execute request and get response
 $result = curl_exec($ch);
-$vuelos = json_decode($result);
+$vuelo = json_decode($result);
+
+//var_dump($vuelo);
+
 curl_close($ch);
 
 
 
-// init curl object        
-$ch = curl_init();
-// define options
-$optArray = array(
-    CURLOPT_URL => 'https://controldocumentofacturawebapi20221003232458.azurewebsites.net/api/Factura/reservas',
-    CURLOPT_RETURNTRANSFER => true
-);
-// apply those options
-curl_setopt_array($ch, $optArray);
-// execute request and get response
-$result = curl_exec($ch);
-$reservas = json_decode($result);
-curl_close($ch);
     	?>
 
 
@@ -95,69 +105,51 @@ curl_close($ch);
     </div>
     <div class="content">
     	<div class="row">
-    	    <div class="col-sm-4">
-    	    	<div>LISTADOS DE RESERVA A FACTURAR</div>
-    	    	<div>
-<?php
-	foreach ($reservas as $booking) {
-	//var_dump($booking);
-		echo "<div class='row'>";
-		echo "<div><b>ID:</b> ".$booking->id."</div>";
-		echo "<div><b>Vuelo:</b> ".$booking->vueloId."</div>";
-		echo "<div><b>Cliente:</b> ".$booking->clienteId."</div>";
-		//echo '<div><button onclick="myFunction('."'".$booking->id."','".$booking->vueloId."','".$booking->clienteId."','".$booking->monto."'".')"> CREAR FACTURA </button></div>';
-		echo "<div> <a href='facturacionreserva.php?reserva=".$booking->id."'> CREAR FACTURA</a></div>";
-		echo "</div>";
-		//
-	}
-?>
-    	    	</div>
-    	    </div>
-    	    <div class="col-sm-4">
+    	    <div class="col-sm-3"></div>
+    	   
+    	    <div class="col-sm-6">
     	    	<div><b><h4>CONFIGURACIÓN FACTURA</h4></b></div>
     	    	<div>
     	    		<b>ID: </b><?=$configuracion->id?><br>
     	    		<b>NIT:</b><?=$configuracion->nitProveedor?><br>
     	    		<b>RS: </b><?=$configuracion->razonSocialProveedor?><br>
     	    	</div>
-    	    </div>
-    	    <div class="col-sm-4">
-    	    	Reportes
-    	    	<ul>
-    	    		<li>Passangers</li>
-    	    		<div>
-    	    			<?php
-    	    				foreach ($pasajeros as $passanger) {
-    	    					echo "<div class='row'> ";
-    	    					echo "<div class='col-sm-6'>".$passanger->id."</div> <div class='col-sm-6'>".$passanger->nombreCompleto."</div>";
-    	    					echo "</div>";
-    	    				}
-    	    			?>
-    	    		
+    	    	<div>
+    	    	<h4>FACTURACION</h4>
+    	    	<form class="form form-control"
+    	    	action="http://127.0.0.1/facturacion/resultado.php" method="post">
+    	    		<input type="hidden" id="monto" name="monto" value="<?=$reserva->monto?>">
+    	    		<input type="hidden" name="importe" value="0">
+    	    		<input type="hidden" name="lugar" value="SCZ">
+
+<div class="mb-3">
+					  <label for="exampleFormControlInput1" class="form-label">Nit/Ci/Passport</label>
+					  <input type="text" name="nitBeneficiario" class="form-control" id="exampleFormControlInput1" placeholder="......" value="<?=$pasajero->passport?>">
+					</div>
+    	    		<div class="mb-3">
+					  <label for="exampleFormControlInput1" class="form-label">Razon Social</label>
+					  <input type="text" name="razonSocialBeneficiario" class="form-control" id="exampleFormControlInput1" placeholder="....." value="<?=$pasajero->nombreCompleto?>">
+					</div>
+					<div class="mb-3">
+					  <label for="exampleFormControlTextarea1" class="form-label">Passport/Nit/Ci</label>
+					  <select class="form-select" name="tipoNit" aria-label="Default select example">
+						  <option value="passport" selected>Passport</option>
+						  <option value="nit">Nit</option>
+						  <option value="ci">Ci</option>
+						</select>
+					</div>
+					
+					<input type="hidden" id="reservaId" name="reservaId" value="<?=$reserva->id?>">
+					<input type="hidden" id="clienteId" name="clienteId" value="<?=$reserva->clienteId?>">
+					<input type="hidden" id="vueloId" name="vueloId" value="<?=$reserva->vueloId?>">
+					<input type="hidden" name="configuracionFacturaId" value="<?=$configuracion->id?>">
+					<p id="demo"></p>
+					<input type="submit" value=" CREAR FACTURA ">
+    	    	</form>
     	    	</div>
-    	    		<li>FlyAirCraft</li>
-    	    		<div>
-    	    			<?php
-    	    				foreach ($vuelos as $flight) {
-    	    					//var_dump($flight);
-    	    					echo "<div class='row'> ";
-    	    					echo "<div class='col-sm-6'>".$flight->id."</div> <div class='col-sm-6'> ".$flight->source_airport_code." - ".$flight->destiny_airport_code."</div>";
-    	    					echo "</div>";
-    	    				}
-    	    			?>
-    	    		</div>
-    	    		<li>Booking</li>
-    	    		<div>
-    	    			<?php
-    	    				foreach ($reservas as $booking) {
-    	    					//var_dump($booking);
-    	    					echo "<div class='row'>";
-    	    					echo "<div class='col-sm-6'>".$booking->id."</div> <div class='col-sm-6'>[".$booking->reservationNumber."] Monto: ".$booking->monto."</div>";
-    	    					echo "</div>";
-    	    				}
-    	    			?>
-    	    		</div>
-    	    	</ul> 
+    	    </div>
+    	    <div class="col-sm-3">
+    	    	 
     	    </div>
 
 
