@@ -151,7 +151,8 @@ curl_close($ch);
       </div>
       
        <div class="col-sm-2">
-            <div> <a href="../index.php"> VOLVER</a> </div>
+            <div> <a href="index.php"> VOLVER</a> </div>
+            
        </div>
     </div>      
     <hr _ngcontent-crr-c17="">
