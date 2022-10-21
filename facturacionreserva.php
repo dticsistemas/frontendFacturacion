@@ -117,7 +117,7 @@ curl_close($ch);
     	    	<div>
     	    	<h4>FACTURACION</h4>
     	    	<form class="form form-control"
-    	    	action="http://127.0.0.1/facturacion/resultado.php" method="post">
+    	    	action="resultado.php" method="post">
     	    		<input type="hidden" id="monto" name="monto" value="<?=$reserva->monto?>">
     	    		<input type="hidden" name="importe" value="0">
     	    		<input type="hidden" name="lugar" value="SCZ">
