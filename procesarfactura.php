@@ -61,5 +61,5 @@ $curl = curl_init();
 $id_factura=$result;
 $id_factura=str_replace('"',"",$id_factura);
 
-header("location:facturacionprint.php?factura=".$id_factura); 
+header("location:facturacionprint?factura=".$id_factura); 
     	?>

@@ -1,11 +1,10 @@
 <?php 
-
+include_once("_header.php");
 
 $id_factura=$_GET['factura'];
 
 var_dump($id_factura);
 
-echo '<p> DATOS DETALLE FACTURA </p>';
 // init curl object        
 $ch = curl_init();
 // define options
@@ -18,7 +17,7 @@ curl_setopt_array($ch, $optArray);
 // execute request and get response
 $result = curl_exec($ch);
 $factura = json_decode($result);
-var_dump($factura);
+//var_dump($factura);
 
 $id_reserva=$factura->reservaId;
 curl_close($ch);
@@ -37,8 +36,7 @@ curl_setopt_array($ch, $optArray);
 $result = curl_exec($ch);
 $configuracion = json_decode($result);
 
-echo '<p> CONFIGURACION FACTURA </p>';
-var_dump($configuracion);
+//var_dump($configuracion);
 curl_close($ch);
 
 
@@ -55,8 +53,7 @@ curl_setopt_array($ch, $optArray);
 // execute request and get response
 $result = curl_exec($ch);
 $reserva = json_decode($result);
-echo '<p> RESERVA </p>';
-var_dump($reserva);
+//var_dump($reserva);
 curl_close($ch);
 
 $id_cliente = $reserva->clienteId;
@@ -73,8 +70,7 @@ curl_setopt_array($ch, $optArray);
 // execute request and get response
 $result = curl_exec($ch);
 $pasajero = json_decode($result);
-echo '<p> PASAJERO </p>';
-var_dump($pasajero);
+//var_dump($pasajero);
 
 curl_close($ch);
 
@@ -91,11 +87,38 @@ curl_setopt_array($ch, $optArray);
 // execute request and get response
 $result = curl_exec($ch);
 $vuelo = json_decode($result);
-echo '<p> VUELO </p>';
-var_dump($vuelo);
+//var_dump($vuelo);
 
 curl_close($ch);
 
 
+include_once("footer.php");
+?>
+
+<div class="row">
+    <div class="col-sm-2"></div>
+    <div class="col-sm-8">
+<?php
+echo "Razon Social Proveedor: ".$config->razonSocialProveedor."<br>";
+echo "Emitido: "."<br>";
+echo "NIT Proveedor: ".$config->nitProveedor."<br>";
+echo "N° Autorizacion: ".$config->nroAutorizacion."<br>";
+
+echo "ID FACTURA: ".$factura->id."<br>";
+echo "Nro.Factura: ",$factura->nroFactura."<br>";
+echo "Emitido: ".$fecha->fecha."<br>";
+echo "Razon Social: ".$factura->razonSocialBeneficiario."<br>";
+echo $factura->tipoNit." : ".$factura->nitBeneficiario."<br>";
+echo "Fecha Reserva: ".$reserva->fecha."<br>";
+echo "Nro.Reserva: ".$reserva->reservationStatus."<br>";
+echo "Estado: FACTURADO"."<br>";
+echo "Monto: ".$reserva->monto."<br>";
+echo "tipoReserva: R"."<br>";
+echo "Origen: ".$vuelo->source_airport_code."<br>";
+echo "Destino: ".$vuelo->destinity_airport_code."<br>";
+echo "Informacion: "."<br>";
 
 ?>
+    </div>
+    <div class="col-sm-2"></div>
+</div>    
