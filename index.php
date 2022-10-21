@@ -78,7 +78,7 @@ curl_close($ch);
             </div>
        </div>
        <div class="col-sm-2">
-            <div> <a href="crearconfiguracion.php"> CONFIGURACION</a> </div>
+            <div> <a href="createconfiguracion"> CONFIGURACION</a> </div>
             <div> <a href="searchfactura.php"> BUSCAR FACTURA</a> </div>
        </div>
     </div>      

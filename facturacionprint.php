@@ -99,10 +99,10 @@ include_once("footer.php");
     <div class="col-sm-2"></div>
     <div class="col-sm-8">
 <?php
-echo "Razon Social Proveedor: ".$config->razonSocialProveedor."<br>";
+echo "Razon Social Proveedor: ".$configuracion->razonSocialProveedor."<br>";
 echo "Emitido: "."<br>";
-echo "NIT Proveedor: ".$config->nitProveedor."<br>";
-echo "N° Autorizacion: ".$config->nroAutorizacion."<br>";
+echo "NIT Proveedor: ".$configuracion->nitProveedor."<br>";
+echo "N° Autorizacion: ".$configuracion->nroAutorizacion."<br>";
 
 echo "ID FACTURA: ".$factura->id."<br>";
 echo "Nro.Factura: ",$factura->nroFactura."<br>";
@@ -115,7 +115,8 @@ echo "Estado: FACTURADO"."<br>";
 echo "Monto: ".$reserva->monto."<br>";
 echo "tipoReserva: R"."<br>";
 echo "Origen: ".$vuelo->source_airport_code."<br>";
-echo "Destino: ".$vuelo->destinity_airport_code."<br>";
+echo "Destino: ".$vuelo->destiny_airport_code."<br>";
+echo "Programa de Vuelo: ".$vuelo->flight_program_id."<br>";
 echo "Informacion: "."<br>";
 
 ?>
