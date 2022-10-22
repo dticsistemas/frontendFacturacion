@@ -117,14 +117,12 @@ curl_close($ch);
     echo "</tr>";
   }
 ?>
-</form>
-            
-            
-            
+</form>                                    
         </tbody>
        
     </table>
 
+    <p> </p>
   </div>
   <div class="col-sm-1"></div>
 </div>
@@ -148,55 +146,74 @@ curl_close($ch);
     <p><p><hr>
     <div class="content">
     	<div class="row">
-    	       	    
-    	    <div class="col-sm-4">
-    	    	<ul>
-    	    		<li>Passangers</li>
-    	    		<div>
-    	    			<?php
-    	    				foreach ($pasajeros as $passanger) {
-    	    					echo "<div class='row'> ";
-    	    					echo "<div class='col-sm-6'>".$passanger->id."</div> <div class='col-sm-6'>".$passanger->nombreCompleto."</div>";
-    	    					echo "</div>";
-    	    				}
-    	    			?>
-    	    		
-    	    	</div>
-          </ul>  
+          <div class="col-sm-1">    
           </div>
-          <div class="col-sm-4">  
-          <ul>  
-    	    		<li>FlyAirCraft</li>
-    	    		<div>
-    	    			<?php
+    	    <div class="col-sm-5">
+
+          <div class="row">
+      <div class="my-3 p-3 bg-body rounded shadow-sm">
+    <h6 class="border-bottom pb-2 mb-0">PASSANGERS</h6>
+    <?php
+    	    				foreach ($pasajeros as $passanger) {
+                  ?>
+ <div class="d-flex text-muted pt-3">
+      <svg class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 32x32" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#007bff"></rect><text x="50%" y="50%" fill="#007bff" dy=".3em">32x32</text></svg>
+
+      <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
+        <div class="d-flex justify-content-between">
+          <strong class="text-gray-dark"><?=$passanger->id?></strong>
+          <!--<a href="#">Follow</a>-->
+        </div>
+        <span class="d-block">@<?=$passanger->name." ".$passanger->lastName?></span>
+      </div>
+    </div>
+
+<?php
+    	    				}
+    	    			?>
+    
+    
+  </div>
+      </div>
+
+  
+          </div>
+          <div class="col-sm-5">
+
+          <div class="row">
+      <div class="my-3 p-3 bg-body rounded shadow-sm">
+    <h6 class="border-bottom pb-2 mb-0">VUELOS</h6>
+    <?php
     	    				foreach ($vuelos as $flight) {
-    	    					//var_dump($flight);
-    	    					echo "<div class='row'> ";
-    	    					echo "<div class='col-sm-6'>".$flight->id."</div> <div class='col-sm-6'> ".$flight->source_airport_code." - ".$flight->destiny_airport_code."</div>";
-    	    					echo "</div>";
+                  ?>
+ <div class="d-flex text-muted pt-3">
+      <svg class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 32x32" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#007bff"></rect><text x="50%" y="50%" fill="#007bff" dy=".3em">32x32</text></svg>
+
+      <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
+        <div class="d-flex justify-content-between">
+          <strong class="text-gray-dark"><?=$flight->id?></strong>
+          <!--<a href="#">Follow</a>-->
+        </div>
+        <span class="d-block">@<?=$flight->source_airport_code." - ".$flight->destiny_airport_code?></span>
+      </div>
+    </div>
+
+<?php
     	    				}
     	    			?>
-    	    		</div>
-          </ul>  
-          </div>  
-          <div class="col-sm-4">  
-            <ul>    
-    	    		<li>Booking</li>
-    	    		<div>
-    	    			<?php
-    	    				foreach ($reservas as $booking) {
-    	    					//var_dump($booking);
-    	    					echo "<div class='row'>";
-    	    					echo "<div class='col-sm-6'>".$booking->id."</div> <div class='col-sm-6'>[".$booking->reservationNumber."] Monto: ".$booking->monto."</div>";
-    	    					echo "</div>";
-    	    				}
-    	    			?>
-    	    		</div>
-    	    	</ul> 
-    	    </div>
+    
+    
+  </div>
+      </div>
+
+  
+          </div>
+          
+          <div class="col-sm-1"></div>
 
 
     	</div>
+      
     </div>
   </body>
 <script type="text/javascript">

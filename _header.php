@@ -5,7 +5,7 @@
   <title>AirlineFrontend</title>
   <!-- base href="http://localhost:4200/" -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="http://<?= $_SERVER['SERVER_NAME'];?>/facturacion/AirlineFrontend_archivos/styles.css">
+  <link rel="stylesheet" href="AirlineFrontend_archivos/styles.css">
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
   <script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
   <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
